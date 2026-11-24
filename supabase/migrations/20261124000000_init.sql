@@ -69,5 +69,15 @@ begin
 end;
 $$;
 
+-- ── API access ──────────────────────────────────────────────────────────────
+-- Explicit grants, so the app works even when the project was created with
+-- "Grant API access to new tables automatically" turned off. RLS above still
+-- limits each user to their own rows.
+grant select, insert, update, delete on public.user_data to authenticated;
+grant select on public.subscriptions to authenticated;
+revoke all on public.user_data, public.subscriptions, public.ai_usage from anon;
+revoke all on public.ai_usage from authenticated;
+grant all on public.user_data, public.subscriptions, public.ai_usage to service_role;
+
 revoke all on function public.consume_ai_credit(uuid, integer) from public, anon, authenticated;
 grant execute on function public.consume_ai_credit(uuid, integer) to service_role;
