@@ -75,6 +75,7 @@ $$;
 -- limits each user to their own rows.
 grant select, insert, update, delete on public.user_data to authenticated;
 grant select on public.subscriptions to authenticated;
+revoke truncate, references, trigger on public.user_data, public.subscriptions from authenticated;
 revoke all on public.user_data, public.subscriptions, public.ai_usage from anon;
 revoke all on public.ai_usage from authenticated;
 grant all on public.user_data, public.subscriptions, public.ai_usage to service_role;
