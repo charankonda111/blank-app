@@ -1,0 +1,14 @@
+# Minimal Supabase CLI config for Lost2Med. Run `supabase link --project-ref <ref>` once.
+project_id = "lost2med"
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173"]
+
+[auth.email]
+enable_confirmations = true
+
+# Stripe calls this one directly, so it can't send a Supabase login token.
+# It verifies the Stripe signature instead.
+[functions.stripe-webhook]
+verify_jwt = false
